@@ -1,0 +1,25 @@
+{
+  "name": "battleships",
+  "version": "1.0.0",
+  "description": "Guessing game for two players",
+  "main": "Index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:server": "cd server.src && tsc",
+    "build:client": "cd client.src && tsc",
+    "start": "node server/index.js"
+  },
+  "keywords": [
+    "game"
+  ],
+  "author": "Anatoly Lysykh, Anna Grigoryeva",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^6.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^10.14.4",
+    "@types/ws": "^6.0.1",
+    "typescript": "^3.4.2"
+  }
+}

@@ -1,0 +1,406 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html { font-size: 100% } 
+
+body {
+    display: flex;
+    justify-content: center;
+    font-family: Verdana, Geneva, sans-serif;
+}
+
+button {
+    border-style: solid;
+    border-width: 1px;
+  }
+
+main {
+    height: 100vh;
+    width: 100vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    align-items: flex-start;
+}
+
+.loader{
+    margin: 0 0 2em;
+    height: 12vh;
+    width: 12vh;
+    text-align: center;
+    margin: 0 auto 1em;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.window>p{
+    color: gray;
+    font-size: 3vh;
+}
+
+svg path, svg rect{
+  fill: lightgray;
+}
+
+.hatching {
+    background: repeating-linear-gradient(45deg,white,white 2px,lightgray 2px,lightgray 4px);
+    box-sizing: border-box;
+    border-style: solid;
+    border-width: 1px;
+    border-color: lightgray;
+}
+
+.p1window>.hatching {
+    width: 3vh;
+    height: 3vh;
+}
+
+.p2window>.hatching {
+    width: 5vh;
+    height: 5vh;
+}
+
+.p1window, .p2window {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    border-style: solid;
+    border-width: 1px;
+    border-color: lightgray;
+}
+
+.p1window {
+    width: 33vh;
+    height: 33vh;
+}
+
+.p2window {
+    width: 55vh;
+    height: 55vh;
+}
+
+.rightwindow {
+    width: 55vh;
+    height: 33vh;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+.leftwindow {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+#p1name, #p2name{
+    font-weight: 600;
+}
+
+#p1name {
+    width: 100%;
+    line-height: 3vh;
+    margin-left: 1.8vh;
+    margin-bottom: 9vh;
+    font-size: 2vh;
+    align-self: flex-start;
+}
+
+#p2name {
+    line-height: 5vh;
+    margin-right: 1.8vh;
+    font-size: 3vh;
+}
+
+.righthint {
+    width: 50%;
+    margin-left: 5vh;
+    margin-top: 12vh;
+    margin-bottom: 1.5vh;
+    line-height: 3vh;
+    font-size: 2vh;
+}
+
+#submit {
+    width: 50vh;
+    height: 3vh;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+    margin-left: 5vh;
+    border-width: 2px;
+    box-sizing: content-box;
+    font-size: 2vh;
+    font-weight: 600;
+}
+
+#submit:hover{
+    border-color: rgb(96, 166, 242);
+}
+
+#submit:disabled{
+    background: none;
+    border-color: rgb(235, 235, 235);
+}
+
+.rightblock {
+    width: 3vh;
+    height: 12vh;
+}
+
+.leftwindow {
+    width: 33vh;
+    height: 55vh;
+}
+
+.letters {
+    display: flex;
+    flex-direction: row;
+}
+
+.p1window>.letters{
+    height: 3vh;
+    width: 30vh;
+}
+
+.p2window>.letters{
+    height: 5vh;
+    width: 50vh;
+}
+
+.numbers {
+    display: flex;
+    flex-direction: column;
+}
+
+.p1window>.numbers{
+    height: 30vh;
+    width: 3vh;
+}
+
+.p2window>.numbers{
+    height: 50vh;
+    width: 5vh;
+}
+
+.number, .letter {
+    text-align: center;
+    border-style: solid;
+    border-width: 1px;
+    border-color: lightgray;
+    font-size: 3vh;
+    color: gray;
+}
+
+.letter {
+    width: 10%;
+}
+
+.number {
+    height: 10%;
+}
+
+.number:before, .letter:before {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+  }
+
+.p1window>.numbers>.number {
+    font-size: 1.5vh;
+}
+
+.p1window>.letters>.letter {
+    font-size: 1.5vh;
+}
+
+.container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.square {
+    height: 10%;
+    width: 10%;
+    background: rgb(235, 235, 235);
+    border-color: lightgray;
+}
+
+.square:hover {
+    background: lightgray;
+}
+
+.square:active {
+    background: rgb(255, 204, 0);
+}
+
+.hit{
+    background: pink;
+    border-color: red;
+    border-width: 2px;
+}
+
+.miss{
+    background: lightgray;
+    border-color: lightgray;
+}
+
+.ship {
+    background: rgb(149, 179, 206);
+    outline: 2px solid lightgray;
+    display: inline-flex;
+    flex-direction: column;
+    align-self: flex-end;
+}
+
+.ship:hover {
+    outline-color: rgb(96, 166, 242);
+}
+
+.ship:active {
+    outline-color: rgb(255, 204, 0);
+}
+
+.hidden {
+    background: white;
+    outline-color: rgb(235, 235, 235);
+}
+
+.hidden:hover {
+    outline-color: rgb(235, 235, 235);
+}
+
+.hidden>.regular {
+    visibility: hidden;
+}
+
+.window{
+    height: 100vh;
+    width: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#login, #finish{
+    background: lightgray;
+    height: 20vh;
+    width: 40vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#login>p{
+    line-height: 4vh;
+    font-size: 2.5vh;
+    margin-top: 2vh;
+}
+
+#finish>p{
+    line-height: 5vh;
+    font-size: 5vh;
+    margin-top: 3vh;
+}
+
+#finish>button{
+    width: 25vh;
+    height: 5vh;
+    margin-top: 3vh;
+    font-size: 3vh;
+    border-width: 2px;
+}
+
+#finish>button:hover{
+    border-color: rgb(96, 166, 242);
+}
+
+#login>input{
+    text-align: center;
+    width: 25vh;
+    height: 4vh;
+    margin-top: 1vh;
+    font-size: 3vh;
+}
+
+#login>button{
+    font-size: 2vh;
+    font-weight: 600;
+    width: 15vh;
+    height: 4vh;
+    margin-top: 2vh;
+}
+
+#login>button:hover{
+    border-color: rgb(96, 166, 242);
+    border-width: 2px;
+}
+
+.removed{
+    display: none;
+}
+
+.grabbed {
+    position: fixed;
+    pointer-events: none;
+    outline-color: rgb(242, 15, 38);
+}
+
+.placeable {
+    outline-color: rgb(96, 166, 242);
+}
+
+.placed {
+    background: none;
+    outline-color: rgb(57, 108, 164);
+    position: absolute;
+}
+
+.placed>.regular {
+    visibility: hidden;
+}
+
+.regular{
+    box-sizing: border-box;
+    height: 3vh;
+    width: 3vh;
+}
+
+#p2field>.ship>.regular {
+    height: 5vh;
+    width: 5vh;
+}
+
+.regular {
+    background: rgb(235, 235, 235);
+    border: solid;
+    border-width: 1px;
+    border-color: lightgray;
+}
+
+.field{
+    font-size: 0;
+    position: relative;
+}
+
+.p1window>.field{
+    width: 30vh;
+    height: 30vh;
+}
+
+.p2window>.field{
+    width: 50vh;
+    height: 50vh;
+}
+
+.broken{
+    outline-color: red;
+}

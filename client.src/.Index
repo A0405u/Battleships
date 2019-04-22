@@ -1,0 +1,396 @@
+document.addEventListener("DOMContentLoaded", () => { 
+    main();
+  });
+
+let x : number;
+let y : number;
+
+type Direction = "Vertical" | "Horisontal";
+
+type Condition = "Broken" | "Regular";
+
+type Action = "Grab" | "Place";
+
+enum Status {
+
+    Free = 0,
+    Ship = 1,
+    Miss = 2,
+    Hit = 3,
+    Restricted = -1
+}
+
+class Cell {
+    data: Status;
+    element: HTMLElement | null;
+
+    constructor(data: Status, element: HTMLElement | null){
+        this.data = data;
+        this.element = element;
+    }
+
+    change(status: Status){
+        this.data = status;
+    }
+
+    assign(element: HTMLElement | null){
+        this.element = element;
+    }
+
+    status(){
+        return this.data;
+    }
+}
+
+class Field {
+    
+    cells: Array<Cell> = new Array(144);
+
+    constructor(field: HTMLElement){
+
+        for(let i = 0; i < 144; i++)
+            this.cells[i] = new Cell(Status.Free, null);
+
+        for(let i = 0; i < 12; i++)
+            this.cells[i].change(Status.Restricted);
+
+        for(let i = 12; i < 132; i++){
+            this.cells[i].change(Status.Restricted);
+            i+=11;
+            this.cells[i].change(Status.Restricted);
+        }
+
+        for(let i = 132; i < 144; i++)
+            this.cells[i].change(Status.Restricted);
+
+        let n = 0;
+        let i = 13;
+        let squares = field.querySelectorAll("square");
+
+        for (let j = 0; j < 10; j++){
+            for (let k = 0; k < 10; k++){
+                this.cells[i++].assign(squares[n] as HTMLElement);
+            }
+            i+=2;
+        }
+    }
+
+
+    ship(position: string, decks: number, direction: Direction, action: Action){ //снять/поставить
+
+        let i = this.index(position);
+
+        for (let j = 0; j < decks; j++){
+
+            this.cells[i].change(action === "Place" ? Status.Ship : Status.Free);
+
+            if(direction === "Horisontal")
+                i++;
+            else
+                i+=12;
+        }
+        return true;
+    }
+
+    check(position: string, decks: number, direction: Direction){
+
+        let origin = this.index(position);
+
+        let i = origin;
+
+        for (let j = 0; j < decks; j++){
+
+            if(this.cells[i].data !== 0)
+                return false;
+
+            if(direction === "Horisontal")
+                i++;
+            else
+                i+=12;
+        }
+
+        let x = 0;
+        let y = 0;
+
+        if(direction === "Horisontal")
+            x = decks + 2, y = 3;
+        else
+            x = 3, y = decks + 2;
+
+        i = origin - 13;
+
+        for (; y; y--){
+
+            for (let j = x; j; j--){
+
+                if(this.data[i]>0)
+                    return false;
+                i++;
+            }
+            i = i - x + 12;
+        }
+
+        return true;
+    }
+
+    index(position: string){
+        return position.charCodeAt(0) - 64 + Number(position.slice(1)) * 12;
+    }
+
+    log(){
+        for (let i = 0; i < 12; i++){
+            let s = "";
+            for (let j = 0; j < 12; j++)
+                s += this.data[i*10+j];
+            console.log(s);
+        }
+    }
+
+}
+
+class Ship {
+
+    position: string = "";
+    decks: number;
+    direction: Direction;
+    player: 1 | 2;
+    element: HTMLElement;
+    origin: HTMLElement | null;
+    condition: Condition = "Regular";
+
+    constructor(el: HTMLElement, plr: 1 | 2, org: HTMLElement | null) {
+
+        this.element = el;
+        this.player = plr;
+        this.decks = el.childElementCount;
+        this.origin = org;
+
+        if (el.style.flexDirection === "row")
+            this.direction = "Horisontal";
+        else
+            this.direction = "Vertical";
+
+    }
+
+    grab(event: MouseEvent){
+
+        document.body.appendChild( this.element.cloneNode(true) );
+    
+        this.element.classList.add( "hidden" );
+
+        this.origin = this.element;
+
+        this.element = document.querySelector("body>.ship") as HTMLElement;
+
+        this.element.classList.add( "grabbed" );
+
+        x = (this.origin.getBoundingClientRect().right - this.origin.getBoundingClientRect().left) / 2; 
+        y = (this.origin.getBoundingClientRect().bottom - this.origin.getBoundingClientRect().top) / this.decks / 2;
+
+        this.move(event);
+    }
+
+    move(event: MouseEvent){
+
+        this.element.style.left = ( event.clientX - x ) + "px";
+        this.element.style.top = ( event.clientY - y ) + "px";
+    }
+
+    flip(){
+
+        if (this.direction === "Vertical"){
+
+            this.direction = "Horisontal";
+            this.element.style.flexDirection = "row";
+        }
+        else{
+
+            this.direction = "Vertical";
+            this.element.style.flexDirection = "column";
+        }
+    }
+
+    return(){
+
+        this.element.remove();
+
+        if(!this.origin)
+            return;
+
+        this.origin.classList.remove('hidden');
+
+        this.element = this.origin;
+
+        this.origin = null;
+
+        this.direction = "Vertical";
+    }
+
+    place(value : string ) : void {
+
+        this.position = value;
+        
+        this.element.remove();
+
+        this.element.classList.add("placed");
+
+        this.element.classList.remove("grabbed");
+
+        let field = document.getElementById("p1field");
+
+        if (!field)
+            return;
+
+        field.appendChild(this.element);
+
+        this.element.style.left = (value.charCodeAt(0) - 65) * 10 + "%";
+
+        this.element.style.top = (Number(value.slice(1)) - 1) * 10 + "%";
+
+    } 
+
+}
+
+function main() {
+
+//    const socket = new WebSocket( 'ws://localhost:8080'); //http - ws, https - wss, открываем соединение с сервером
+
+    const p1field = document.getElementById("p1field");
+
+    const p2field = document.getElementById("p2field");
+
+    const rwindow = document.querySelector( ".rightwindow" ) as HTMLElement | null;
+
+//    const lwindow = document.querySelector( ".leftwindow" ) as HTMLElement | null;
+
+    let ships: Array<Ship> = new Array(20);
+
+    let id: number = -1;
+
+//    let p1data = new Field;
+
+//    let p2data = new Field;
+
+    init(ships);
+
+    if (!p1field || !p2field)
+        return;
+
+    p1field.addEventListener('submit', ( event ) => {
+        event.preventDefault();
+    });
+
+    p2field.addEventListener('submit', ( event ) => {
+        event.preventDefault();
+    });
+
+    p1field.addEventListener('click', ( event ) => {
+
+        let target = event.target as HTMLButtonElement | null;
+
+        if ( !target || !target.dataset.value)
+            return;
+
+//        place(ship, target.dataset.value);
+//        p1data.ship(target.dataset.value, decks, direction);
+//        p1data.log();
+
+    });
+
+    p2field.addEventListener( 'click', ( event ) => {
+
+        let target = event.target as HTMLButtonElement | null;
+
+        if ( !target || !target.dataset.value)
+            return;
+
+        shot( target.dataset.value );
+
+    });
+
+    if (!rwindow)
+        return;
+
+    rwindow.addEventListener( "click", ( event ) => {
+
+        event.preventDefault();
+
+        if (id >= 0){ // возвращаем текущий корабль на место, если таковой имеется
+
+            ships[id].return();
+            id = -1;
+            return;
+        }
+
+        let target = event.target as HTMLElement | null;
+
+        if (!target)
+            return;
+
+        if(target.matches(".hidden")) // если нажали по уже взятому кораблю
+            return;
+
+        if(!target.matches(".ship")) // проверка на нажатие по подходящему кораблю
+        {
+            if (target.matches( ".regular" ) ){ // нажимаем на клетки корабля а не на сам блок
+                target = target.closest(".ship") as HTMLElement | null;
+                if (!target)
+                    return;
+            }
+            else
+                return;
+        }
+
+        id = Number(target.id); // запоминаем id текущего корабля
+
+        ships[id].grab(event); // берем его
+    });
+
+    document.addEventListener( "mousemove", ( event ) => {
+
+        if (id < 0)
+            return;
+
+        ships[id].move(event);
+
+        let target = event.target as HTMLElement;
+
+        if(target)
+            if(p1field.check(target.dataset.value))
+    });
+
+    document.addEventListener( "contextmenu", ( event ) => {
+
+        if (id >= 0){
+
+            event.preventDefault();
+
+            ships[id].flip();
+        }
+
+    });
+
+
+}
+
+function shot( value : string ) : void {
+    console.log( value );
+//    socket.send( value );
+}
+
+function init(ships: Array<Ship>){
+
+    for (let i = 0; i < 10; i++){
+
+        let element = document.getElementById(i.toString()) as HTMLElement;
+        ships[i] = new Ship(element, 1, null);
+    }
+
+    for (let i = 10; i < 20; i++){
+
+        let element = document.getElementById(i.toString()) as HTMLElement;
+        ships[i] = new Ship(element, 2, null);
+    }
+}
+
+Date.now().toString(36) + Math.floor(Math.random() * 1000 ).toString(36);

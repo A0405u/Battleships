@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Battleships</title>
+	<link rel="stylesheet" href="styles/index.css" />
+</head>
+<body>
+    <div id = "start" class = "window">
+        <form id = "login">
+            <p>Enter your name:</p>
+            <input type="text" name="name" />
+            <button type = "submit">SUBMIT</button>
+        </form>
+    </div>
+    <div id = "loading" class = "window removed">
+        <div class="loader loader--style3" title="2">
+            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50" xml:space="preserve">
+                <path fill="#000" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+                    <animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"/>
+                </path>
+            </svg>
+        </div>
+        <p>WAITING FOR OPPONENT</p>
+    </div>
+    <div id = "end" class = "window removed">
+        <form id = "finish">
+            <p>YOU WIN!</p>
+            <button type = "submit">RESTART</button>
+        </form>
+    </div>
+    <main class = "removed">
+        <div class = "p1window">
+            <div class = "hatching"></div>
+            <div class = "letters">
+                <div class = "letter">A</div>
+                <div class = "letter">B</div>
+                <div class = "letter">C</div>
+                <div class = "letter">D</div>
+                <div class = "letter">E</div>
+                <div class = "letter">F</div>
+                <div class = "letter">G</div>
+                <div class = "letter">H</div>
+                <div class = "letter">I</div>
+                <div class = "letter">J</div>
+            </div>
+            <div class = "numbers">
+                <div class = "number">1</div>
+                <div class = "number">2</div>
+                <div class = "number">3</div>
+                <div class = "number">4</div>
+                <div class = "number">5</div>
+                <div class = "number">6</div>
+                <div class = "number">7</div>
+                <div class = "number">8</div>
+                <div class = "number">9</div>
+                <div class = "number">10</div>
+            </div>
+            <form id = "p1field" name = "p1field" class = "field"> 
+                <div class = "container">
+                    <button class = "square" type="button" data-value="A1"></button>
+                    <button class = "square" type="button" data-value="B1"></button>
+                    <button class = "square" type="button" data-value="C1"></button>
+                    <button class = "square" type="button" data-value="D1"></button>
+                    <button class = "square" type="button" data-value="E1"></button>
+                    <button class = "square" type="button" data-value="F1"></button>
+                    <button class = "square" type="button" data-value="G1"></button>
+                    <button class = "square" type="button" data-value="H1"></button>
+                    <button class = "square" type="button" data-value="I1"></button>
+                    <button class = "square" type="button" data-value="J1"></button>
+                    <button class = "square" type="button" data-value="A2"></button>
+                    <button class = "square" type="button" data-value="B2"></button>
+                    <button class = "square" type="button" data-value="C2"></button>
+                    <button class = "square" type="button" data-value="D2"></button>
+                    <button class = "square" type="button" data-value="E2"></button>
+                    <button class = "square" type="button" data-value="F2"></button>
+                    <button class = "square" type="button" data-value="G2"></button>
+                    <button class = "square" type="button" data-value="H2"></button>
+                    <button class = "square" type="button" data-value="I2"></button>
+                    <button class = "square" type="button" data-value="J2"></button>
+                    <button class = "square" type="button" data-value="A3"></button>
+                    <button class = "square" type="button" data-value="B3"></button>
+                    <button class = "square" type="button" data-value="C3"></button>
+                    <button class = "square" type="button" data-value="D3"></button>
+                    <button class = "square" type="button" data-value="E3"></button>
+                    <button class = "square" type="button" data-value="F3"></button>
+                    <button class = "square" type="button" data-value="G3"></button>
+                    <button class = "square" type="button" data-value="H3"></button>
+                    <button class = "square" type="button" data-value="I3"></button>
+                    <button class = "square" type="button" data-value="J3"></button>
+                    <button class = "square" type="button" data-value="A4"></button>
+                    <button class = "square" type="button" data-value="B4"></button>
+                    <button class = "square" type="button" data-value="C4"></button>
+                    <button class = "square" type="button" data-value="D4"></button>
+                    <button class = "square" type="button" data-value="E4"></button>
+                    <button class = "square" type="button" data-value="F4"></button>
+                    <button class = "square" type="button" data-value="G4"></button>
+                    <button class = "square" type="button" data-value="H4"></button>
+                    <button class = "square" type="button" data-value="I4"></button>
+                    <button class = "square" type="button" data-value="J4"></button>
+                    <button class = "square" type="button" data-value="A5"></button>
+                    <button class = "square" type="button" data-value="B5"></button>
+                    <button class = "square" type="button" data-value="C5"></button>
+                    <button class = "square" type="button" data-value="D5"></button>
+                    <button class = "square" type="button" data-value="E5"></button>
+                    <button class = "square" type="button" data-value="F5"></button>
+                    <button class = "square" type="button" data-value="G5"></button>
+                    <button class = "square" type="button" data-value="H5"></button>
+                    <button class = "square" type="button" data-value="I5"></button>
+                    <button class = "square" type="button" data-value="J5"></button>
+                    <button class = "square" type="button" data-value="A6"></button>
+                    <button class = "square" type="button" data-value="B6"></button>
+                    <button class = "square" type="button" data-value="C6"></button>
+                    <button class = "square" type="button" data-value="D6"></button>
+                    <button class = "square" type="button" data-value="E6"></button>
+                    <button class = "square" type="button" data-value="F6"></button>
+                    <button class = "square" type="button" data-value="G6"></button>
+                    <button class = "square" type="button" data-value="H6"></button>
+                    <button class = "square" type="button" data-value="I6"></button>
+                    <button class = "square" type="button" data-value="J6"></button>
+                    <button class = "square" type="button" data-value="A7"></button>
+                    <button class = "square" type="button" data-value="B7"></button>
+                    <button class = "square" type="button" data-value="C7"></button>
+                    <button class = "square" type="button" data-value="D7"></button>
+                    <button class = "square" type="button" data-value="E7"></button>
+                    <button class = "square" type="button" data-value="F7"></button>
+                    <button class = "square" type="button" data-value="G7"></button>
+                    <button class = "square" type="button" data-value="H7"></button>
+                    <button class = "square" type="button" data-value="I7"></button>
+                    <button class = "square" type="button" data-value="J7"></button>
+                    <button class = "square" type="button" data-value="A8"></button>
+                    <button class = "square" type="button" data-value="B8"></button>
+                    <button class = "square" type="button" data-value="C8"></button>
+                    <button class = "square" type="button" data-value="D8"></button>
+                    <button class = "square" type="button" data-value="E8"></button>
+                    <button class = "square" type="button" data-value="F8"></button>
+                    <button class = "square" type="button" data-value="G8"></button>
+                    <button class = "square" type="button" data-value="H8"></button>
+                    <button class = "square" type="button" data-value="I8"></button>
+                    <button class = "square" type="button" data-value="J8"></button>
+                    <button class = "square" type="button" data-value="A9"></button>
+                    <button class = "square" type="button" data-value="B9"></button>
+                    <button class = "square" type="button" data-value="C9"></button>
+                    <button class = "square" type="button" data-value="D9"></button>
+                    <button class = "square" type="button" data-value="E9"></button>
+                    <button class = "square" type="button" data-value="F9"></button>
+                    <button class = "square" type="button" data-value="G9"></button>
+                    <button class = "square" type="button" data-value="H9"></button>
+                    <button class = "square" type="button" data-value="I9"></button>
+                    <button class = "square" type="button" data-value="J9"></button>
+                    <button class = "square" type="button" data-value="A10"></button>
+                    <button class = "square" type="button" data-value="B10"></button>
+                    <button class = "square" type="button" data-value="C10"></button>
+                    <button class = "square" type="button" data-value="D10"></button>
+                    <button class = "square" type="button" data-value="E10"></button>
+                    <button class = "square" type="button" data-value="F10"></button>
+                    <button class = "square" type="button" data-value="G10"></button>
+                    <button class = "square" type="button" data-value="H10"></button>
+                    <button class = "square" type="button" data-value="I10"></button>
+                    <button class = "square" type="button" data-value="J10"></button>
+                </div>
+            </form>
+        </div>
+        <div class = "rightwindow">
+            <div id = "p1name">Player 1</div>
+            <div class = "rightblock"> </div>
+            <div id="0" class = "ship">
+                <div class = "regular"></div>
+                <div class = "regular"></div>
+                <div class = "regular"></div>
+                <div class = "regular"></div>
+            </div>
+            <div id="1" class = "ship">
+                <div class = "regular"></div>
+                <div class = "regular"></div>
+                <div class = "regular"></div>
+            </div>
+            <div id="2" class = "ship">
+                <div class = "regular"></div>
+                <div class = "regular"></div>
+                <div class = "regular"></div>
+            </div>
+            <div id="3" class = "ship">
+                <div class = "regular"></div>
+                <div class = "regular"></div>
+            </div>
+            <div id="4" class = "ship">
+                <div class = "regular"></div>
+                <div class = "regular"></div>
+            </div>
+            <div id="5" class = "ship">
+                <div class = "regular"></div>
+                <div class = "regular"></div>
+            </div>
+            <div id="6" class = "ship">
+                <div class = "regular"></div>
+            </div>
+            <div id="7" class = "ship">
+                <div class = "regular"></div>
+            </div>
+            <div id="8" class = "ship">
+                <div class = "regular"></div>
+            </div>
+            <div id="9" class = "ship">
+                <div class = "regular"></div>
+            </div>
+            <button id = "submit" type = "button" disabled>ARRANGE YOUR SHIPS</button>
+        </div>
+        <div class = "leftwindow">
+            <div id = "p2name">Player 2</div>
+        </div>
+        <div class = "p2window">
+            <div class = "hatching"></div>
+            <div class = "letters">
+                <div class = "letter">A</div>
+                <div class = "letter">B</div>
+                <div class = "letter">C</div>
+                <div class = "letter">D</div>
+                <div class = "letter">E</div>
+                <div class = "letter">F</div>
+                <div class = "letter">G</div>
+                <div class = "letter">H</div>
+                <div class = "letter">I</div>
+                <div class = "letter">J</div>
+            </div>
+            <div class = "numbers">
+                <div class = "number">1</div>
+                <div class = "number">2</div>
+                <div class = "number">3</div>
+                <div class = "number">4</div>
+                <div class = "number">5</div>
+                <div class = "number">6</div>
+                <div class = "number">7</div>
+                <div class = "number">8</div>
+                <div class = "number">9</div>
+                <div class = "number">10</div>
+            </div>
+            <form id = "p2field" class = "field">
+                <div class = "container">
+                    <button class = "square" type="button" data-value="A1"></button>
+                    <button class = "square" type="button" data-value="B1"></button>
+                    <button class = "square" type="button" data-value="C1"></button>
+                    <button class = "square" type="button" data-value="D1"></button>
+                    <button class = "square" type="button" data-value="E1"></button>
+                    <button class = "square" type="button" data-value="F1"></button>
+                    <button class = "square" type="button" data-value="G1"></button>
+                    <button class = "square" type="button" data-value="H1"></button>
+                    <button class = "square" type="button" data-value="I1"></button>
+                    <button class = "square" type="button" data-value="J1"></button>
+                    <button class = "square" type="button" data-value="A2"></button>
+                    <button class = "square" type="button" data-value="B2"></button>
+                    <button class = "square" type="button" data-value="C2"></button>
+                    <button class = "square" type="button" data-value="D2"></button>
+                    <button class = "square" type="button" data-value="E2"></button>
+                    <button class = "square" type="button" data-value="F2"></button>
+                    <button class = "square" type="button" data-value="G2"></button>
+                    <button class = "square" type="button" data-value="H2"></button>
+                    <button class = "square" type="button" data-value="I2"></button>
+                    <button class = "square" type="button" data-value="J2"></button>
+                    <button class = "square" type="button" data-value="A3"></button>
+                    <button class = "square" type="button" data-value="B3"></button>
+                    <button class = "square" type="button" data-value="C3"></button>
+                    <button class = "square" type="button" data-value="D3"></button>
+                    <button class = "square" type="button" data-value="E3"></button>
+                    <button class = "square" type="button" data-value="F3"></button>
+                    <button class = "square" type="button" data-value="G3"></button>
+                    <button class = "square" type="button" data-value="H3"></button>
+                    <button class = "square" type="button" data-value="I3"></button>
+                    <button class = "square" type="button" data-value="J3"></button>
+                    <button class = "square" type="button" data-value="A4"></button>
+                    <button class = "square" type="button" data-value="B4"></button>
+                    <button class = "square" type="button" data-value="C4"></button>
+                    <button class = "square" type="button" data-value="D4"></button>
+                    <button class = "square" type="button" data-value="E4"></button>
+                    <button class = "square" type="button" data-value="F4"></button>
+                    <button class = "square" type="button" data-value="G4"></button>
+                    <button class = "square" type="button" data-value="H4"></button>
+                    <button class = "square" type="button" data-value="I4"></button>
+                    <button class = "square" type="button" data-value="J4"></button>
+                    <button class = "square" type="button" data-value="A5"></button>
+                    <button class = "square" type="button" data-value="B5"></button>
+                    <button class = "square" type="button" data-value="C5"></button>
+                    <button class = "square" type="button" data-value="D5"></button>
+                    <button class = "square" type="button" data-value="E5"></button>
+                    <button class = "square" type="button" data-value="F5"></button>
+                    <button class = "square" type="button" data-value="G5"></button>
+                    <button class = "square" type="button" data-value="H5"></button>
+                    <button class = "square" type="button" data-value="I5"></button>
+                    <button class = "square" type="button" data-value="J5"></button>
+                    <button class = "square" type="button" data-value="A6"></button>
+                    <button class = "square" type="button" data-value="B6"></button>
+                    <button class = "square" type="button" data-value="C6"></button>
+                    <button class = "square" type="button" data-value="D6"></button>
+                    <button class = "square" type="button" data-value="E6"></button>
+                    <button class = "square" type="button" data-value="F6"></button>
+                    <button class = "square" type="button" data-value="G6"></button>
+                    <button class = "square" type="button" data-value="H6"></button>
+                    <button class = "square" type="button" data-value="I6"></button>
+                    <button class = "square" type="button" data-value="J6"></button>
+                    <button class = "square" type="button" data-value="A7"></button>
+                    <button class = "square" type="button" data-value="B7"></button>
+                    <button class = "square" type="button" data-value="C7"></button>
+                    <button class = "square" type="button" data-value="D7"></button>
+                    <button class = "square" type="button" data-value="E7"></button>
+                    <button class = "square" type="button" data-value="F7"></button>
+                    <button class = "square" type="button" data-value="G7"></button>
+                    <button class = "square" type="button" data-value="H7"></button>
+                    <button class = "square" type="button" data-value="I7"></button>
+                    <button class = "square" type="button" data-value="J7"></button>
+                    <button class = "square" type="button" data-value="A8"></button>
+                    <button class = "square" type="button" data-value="B8"></button>
+                    <button class = "square" type="button" data-value="C8"></button>
+                    <button class = "square" type="button" data-value="D8"></button>
+                    <button class = "square" type="button" data-value="E8"></button>
+                    <button class = "square" type="button" data-value="F8"></button>
+                    <button class = "square" type="button" data-value="G8"></button>
+                    <button class = "square" type="button" data-value="H8"></button>
+                    <button class = "square" type="button" data-value="I8"></button>
+                    <button class = "square" type="button" data-value="J8"></button>
+                    <button class = "square" type="button" data-value="A9"></button>
+                    <button class = "square" type="button" data-value="B9"></button>
+                    <button class = "square" type="button" data-value="C9"></button>
+                    <button class = "square" type="button" data-value="D9"></button>
+                    <button class = "square" type="button" data-value="E9"></button>
+                    <button class = "square" type="button" data-value="F9"></button>
+                    <button class = "square" type="button" data-value="G9"></button>
+                    <button class = "square" type="button" data-value="H9"></button>
+                    <button class = "square" type="button" data-value="I9"></button>
+                    <button class = "square" type="button" data-value="J9"></button>
+                    <button class = "square" type="button" data-value="A10"></button>
+                    <button class = "square" type="button" data-value="B10"></button>
+                    <button class = "square" type="button" data-value="C10"></button>
+                    <button class = "square" type="button" data-value="D10"></button>
+                    <button class = "square" type="button" data-value="E10"></button>
+                    <button class = "square" type="button" data-value="F10"></button>
+                    <button class = "square" type="button" data-value="G10"></button>
+                    <button class = "square" type="button" data-value="H10"></button>
+                    <button class = "square" type="button" data-value="I10"></button>
+                    <button class = "square" type="button" data-value="J10"></button>
+                </div>
+                <div id="10" class = "ship removed">
+                    <div class = "regular"></div>
+                    <div class = "regular"></div>
+                    <div class = "regular"></div>
+                    <div class = "regular"></div>
+                </div>
+                <div id="11" class = "ship removed">
+                    <div class = "regular"></div>
+                    <div class = "regular"></div>
+                    <div class = "regular"></div>
+                </div>
+                <div id="12" class = "ship removed">
+                    <div class = "regular"></div>
+                    <div class = "regular"></div>
+                    <div class = "regular"></div>
+                </div>
+                <div id="13" class = "ship removed">
+                    <div class = "regular"></div>
+                    <div class = "regular"></div>
+                </div>
+                <div id="14" class = "ship removed">
+                    <div class = "regular"></div>
+                    <div class = "regular"></div>
+                </div>
+                <div id="15" class = "ship removed">
+                    <div class = "regular"></div>
+                    <div class = "regular"></div>
+                </div>
+                <div id="16" class = "ship removed">
+                    <div class = "regular"></div>
+                </div>
+                <div id="17" class = "ship removed">
+                    <div class = "regular"></div>
+                </div>
+                <div id="18" class = "ship removed">
+                    <div class = "regular"></div>
+                </div>
+                <div id="19" class = "ship removed">
+                    <div class = "regular"></div>
+                </div>
+            </form>
+        </div>
+    </main>
+    <script type="module" src="scripts/index.js"></script>
+</body>
+</html>
