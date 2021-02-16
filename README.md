@@ -1,7 +1,7 @@
 # Battleships
 
 ### Details:
-Guessing game for two players. Players take turns in trying to guess the locations of the other player's ships on a grid. Contains server and client.
+Guessing game for two players.
 
 ### Dependencies:
 
